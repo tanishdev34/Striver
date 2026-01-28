@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,22 +9,22 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Striver's A2Z DSA Course | Complete DSA Roadmap",
+  title: "Strover's A2Z DSA Course | Complete DSA Roadmap",
   description:
-    "Master Data Structures and Algorithms with Striver's comprehensive A2Z DSA sheet. Covers basics to advanced topics with LeetCode problems, video tutorials, and articles.",
+    "Master Data Structures and Algorithms with Strover's comprehensive A2Z DSA sheet. Covers basics to advanced topics with LeetCode problems, video tutorials, and articles.",
   keywords: [
     "DSA",
     "Data Structures",
     "Algorithms",
-    "Striver",
+    "Strover",
     "A2Z",
     "LeetCode",
     "Coding Interview",
     "Programming",
   ],
-  authors: [{ name: "Striver" }],
+  authors: [{ name: "Strover" }],
   openGraph: {
-    title: "Striver's A2Z DSA Course",
+    title: "Strover's A2Z DSA Course",
     description: "Master Data Structures and Algorithms with the complete A2Z DSA sheet",
     type: "website",
   },
@@ -38,6 +39,12 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
+        <Script
+        src="https://umami34.vercel.app/script.js"
+        data-website-id="5ee9a7fd-09ac-41c6-9418-00c90b817d4a"
+        strategy="afterInteractive"
+        defer
+      />
       </body>
     </html>
   );

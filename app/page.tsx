@@ -12,17 +12,7 @@ export default function Home() {
 
       <footer className="relative z-10 border-t border-white/5 py-8 mt-12">
         <div className="container mx-auto max-w-6xl px-4 text-center">
-          <p className="text-sm text-zinc-500">
-            Built with ❤️ for DSA learners • Data from{" "}
-            <a
-              href="https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-violet-400 hover:text-violet-300 transition-colors"
-            >
-              Striver&apos;s A2Z DSA Sheet
-            </a>
-          </p>
+          
         </div>
       </footer>
     </div>

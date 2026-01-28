@@ -35,7 +35,7 @@ function StatsHeaderComponent({ stats }: StatsHeaderProps) {
                     </div>
 
                     <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-                        Striver&apos;s A2Z DSA Course
+                        Strover&apos;s A2Z DSA Course
                     </h1>
                     <p className="text-zinc-400 max-w-2xl text-lg">
                         Master Data Structures and Algorithms with this comprehensive sheet covering everything from basics to advanced topics.
