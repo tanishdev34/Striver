@@ -1,7 +1,20 @@
 "use client";
 
-import { memo } from "react";
-import { BookOpen, Layers, Target, Zap, TrendingUp, Flame } from "lucide-react";
+import { memo, useState, useEffect } from "react";
+import { BookOpen, Layers, Target, Zap, TrendingUp, Flame, CheckCircle2, Circle } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+
+const STORAGE_KEY = "striver-completed-topics";
+
+function getCompletedCount(): number {
+    if (typeof window === "undefined") return 0;
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored).length : 0;
+    } catch {
+        return 0;
+    }
+}
 
 interface StatsHeaderProps {
     stats: {
@@ -15,6 +28,26 @@ interface StatsHeaderProps {
 }
 
 function StatsHeaderComponent({ stats }: StatsHeaderProps) {
+    const [completedCount, setCompletedCount] = useState(0);
+
+    useEffect(() => {
+        // Initialize from localStorage
+        setCompletedCount(getCompletedCount());
+
+        // Listen for changes from topic cards
+        const handleChange = () => {
+            setCompletedCount(getCompletedCount());
+        };
+
+        window.addEventListener("topics-completion-changed", handleChange);
+        return () => {
+            window.removeEventListener("topics-completion-changed", handleChange);
+        };
+    }, []);
+
+    const remainingCount = stats.totalTopics - completedCount;
+    const progressPercentage = stats.totalTopics > 0 ? (completedCount / stats.totalTopics) * 100 : 0;
+
     return (
         <div className="mb-8">
 
@@ -43,6 +76,38 @@ function StatsHeaderComponent({ stats }: StatsHeaderProps) {
                 </div>
             </div>
 
+            {/* Progress Tracker */}
+            <div className="relative overflow-hidden rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent p-6 mb-6">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-full blur-2xl"></div>
+
+                <div className="relative flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+                    <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-2">
+                            <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                            <div>
+                                <p className="text-xs text-zinc-500 uppercase tracking-wider">Done</p>
+                                <p className="text-2xl font-bold text-emerald-400">{completedCount}</p>
+                            </div>
+                        </div>
+                        <div className="w-px h-10 bg-white/10"></div>
+                        <div className="flex items-center gap-2">
+                            <Circle className="h-5 w-5 text-zinc-500" />
+                            <div>
+                                <p className="text-xs text-zinc-500 uppercase tracking-wider">Left</p>
+                                <p className="text-2xl font-bold text-zinc-300">{remainingCount}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm text-zinc-400">Progress</span>
+                            <span className="text-sm font-semibold text-emerald-400">{progressPercentage.toFixed(1)}%</span>
+                        </div>
+                        <Progress value={progressPercentage} className="h-3" />
+                    </div>
+                </div>
+            </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
 
